@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="jquery/jquery-3.4.1.js"></script>
+<script>
+	$(function() {
+		var $obj = $("li");
+		
+		//길이(size)가 있다.
+		console.log($obj.length);
+		
+		//하지만 Array는 아니다.(유사 배열)
+		console.log(typeof ($obj) + ":" + ($obj instanceof Array));
+
+		//jQuery Object안의 element 들은 Not jQuery Object임.
+		//(jQuery Object가 아님.!! 따라서 jQuery API를 호출하면 안됨..)
+		//ex) $obj[0].css --> X 못쓴다.
+		//HTMLElement Native DOM 함수들을 사용해야 한다.
+		console.log($obj[0]);
+		
+		//get(index)을  사용해서 반환받는 타입도 HTMLElement다.
+		console.log($obj.get(0));
+		
+		//event handler
+		$obj.click(function(){
+			console.log(this/*=HTMLElement*/);
+			//this.css --> 이따구로 쓰면 뒤진다. 아래처럼 써라.
+			$(this).css('color', '#f00');
+		});
+
+		/*<참고 코드> 
+		어떻게 만들어졌을까?
+				
+		유사배열을 순회하며 jQuery Object를 적용시킨다.
+		
+		$obj.text("hi")//-->싹 다 바뀜
+		
+		_jQuery.prototype.text = function(text) {
+			//$obj.forEach()---->X 안된다.
+			Array.prototype.forEach(this, function(el) {
+				el.innerText = text;
+			});
+		}
+		
+		//click
+		_jQuery.prototype.click = function(fn) {
+			Array.prototype.forEach(this, function(el) {
+				el.addEventListener('click', fn);
+			});
+		}
+		 */
+
+	});
+</script>
+</head>
+<body>
+	<h1>jQuery Object</h1>
+	<ul>
+		<li>Javascript</li>
+		<li>jQuery</li>
+		<li>ES6</li>
+		<li>React.js</li>
+		<li>Node.js</li>
+	</ul>
+</body>
+</html>
