@@ -5,31 +5,39 @@
 <title>sample1</title>
 <script type="text/javascript" src="./jquery/jquery-1.9.0.js"></script>
 <script type="text/javascript">
+	var images = [ "국화:Chrysanthemum.jpg", "사막:Desert.jpg",
+			"수국:Hydrangeas.jpg", "해파리:Jellyfish.jpg", "코알라:Koala.jpg",
+			"등대:Lighthouse.jpg", "펭귄:Penguins.jpg", "툴립:Tulips.jpg" ];
 
-var images = [ 
-	"국화:Chrysanthemum.jpg", 
-	"사막:Desert.jpg", 
-	"수국:Hydrangeas.jpg", 
-	"해파리:Jellyfish.jpg", 
-	"코알라:Koala.jpg", 
-	"등대:Lighthouse.jpg", 
-	"펭귄:Penguins.jpg", 
-	"툴립:Tulips.jpg" ];
+	$(function() {
 
-$(function(){
+		$("button").click(function() {
+			// 랜덤 변수 
+			var result = Math.floor(Math.random() * images.length);
+			console.log(result);//0~7범위의 정수가 나온다.
+			var imagename = images[result].split(":");// 사막 / Desert
 
-	$("button").click(function(){
-		// 랜덤 변수 
-		var result = Math.floor( Math.random() * (images.length-1)  ) + 1;
+			//console.log(imagename);
+			$("img").attr({
+				"src" : "images/" + imagename[1],//Desert.jpg
+				"alt" : imagename[0]//사막
+			});
+		});
+		
+		$("button").click(function(change) {
+			$("img").click(change)
+			.dblclick(function(){
+				console.log($(this).attr("alt"));
+				alert($(this).attr("alt"));
+			})
+		});
 	});
-	
-});
 </script>
 </head>
 <body>
 	<button>화면을 변경</button>
 	<p>
-		<img src="images/Desert.jpg" alt="사막" />
+		<img src="images/Desert.jpg" alt="사막" style="width: 400px" />
 	</p>
 </body>
 </html>
